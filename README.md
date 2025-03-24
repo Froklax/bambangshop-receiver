@@ -66,7 +66,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Create Notification database and Notification repository struct skeleton.`
     -   [x] Commit: `Implement add function in Notification repository.`
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -85,5 +85,9 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+
+1. Kita menggunakan `RwLock<>` pada tutorial ini untuk menyinkronkan akses ke `Vec` yang menyimpan `Notification` karena `RwLock<>` memungkinkan beberapa thread untuk membaca data secara bersamaan tanpa harus saling menunggu, asalkan tidak ada thread yang sedang menulis. Hal ini sangat berguna ketika data tersebut lebih sering dibaca daripada diubah. Jika kita menggunakan `Mutex<>`, setiap operasi membaca maupun menulis harus mengunci data secara eksklusif sehingga hanya satu thread yang dapat mengakses data pada satu waktu. Kondisi ini dapat menyebabkan bottleneck dan menurunkan performa aplikasi apabila terdapat banyak thread yang mencoba membaca data secara bersamaan.
+
+2. Rust tidak mengizinkan mutasi langsung pada variabel static seperti yang bisa dilakukan di Java karena alasan keamanan dalam lingkungan multi-threaded. Di Java, variabel static yang dapat dimutasi melalui fungsi static berisiko menyebabkan race condition jika tidak didampingi mekanisme sinkronisasi yang tepat. Oleh karena itu, Rust menerapkan pendekatan yang lebih ketat dengan mewajibkan penggunaan crate seperti `lazy_static` untuk menginisialisasi variabel static dengan cara yang aman. Dengan `lazy_static`, variabel static dapat dibungkus dalam struktur sinkronisasi seperti `RwLock` atau `Mutex` sehingga memastikan bahwa setiap akses dan modifikasi data dilakukan dengan cara yang aman.
 
 #### Reflection Subscriber-2
