@@ -77,7 +77,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement receive function in Notification controller.`
     -   [x] Commit: `Implement list_messages function in Notification service.`
     -   [x] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -91,3 +91,9 @@ This is the place for you to write reflections:
 2. Rust tidak mengizinkan mutasi langsung pada variabel static seperti yang bisa dilakukan di Java karena alasan keamanan dalam lingkungan multi-threaded. Di Java, variabel static yang dapat dimutasi melalui fungsi static berisiko menyebabkan race condition jika tidak didampingi mekanisme sinkronisasi yang tepat. Oleh karena itu, Rust menerapkan pendekatan yang lebih ketat dengan mewajibkan penggunaan crate seperti `lazy_static` untuk menginisialisasi variabel static dengan cara yang aman. Dengan `lazy_static`, variabel static dapat dibungkus dalam struktur sinkronisasi seperti `RwLock` atau `Mutex` sehingga memastikan bahwa setiap akses dan modifikasi data dilakukan dengan cara yang aman.
 
 #### Reflection Subscriber-2
+
+1. Saya sempat menjelajahi bagian lain di luar langkah-langkah tutorial, seperti file `src/lib.rs`. Dari yang saya lihat, file tersebut berfungsi untuk memuat file `.env` jika ada dan mengubah pengaturan default sesuai konfigurasi environment. File ini juga mendefinisikan type `Result` dengan error handling khusus dan menyediakan fungsi helper untuk membuat error response. Hal ini membantu agar seluruh aplikasi memiliki standar penanganan error dan konfigurasi yang konsisten.
+
+2. Dengan menggunakan Observer pattern, penambahan subscriber baru menjadi lebih mudah. Setiap instance `Receiver` hanya perlu melakukan konfigurasi port dan melakukan subscribe ke `product_type` yang diinginkan tanpa perlu mengubah logika di sisi `Publisher`. Jika nantinya terdapat lebih dari satu instance `Main` app, masing-masing `Publisher` akan tetap mengirim notifikasi kepada subscriber yang telah mendaftar melalui mekanisme subscribe. Jika ada banyak `Publisher`, `Receiver` mungkin perlu penyesuaian agar bisa menangani notifikasi dari beberapa sumber sekaligus, seperti dengan menyesuaikan mekanisme subscribe dan unsubscribe untuk mendukung banyak domain.
+
+3. Saya belum banyak bereksperimen dengan membuat test sendiri di `Postman` atau menambahkan dokumentasi lebih mendalam pada collection `Postman`. Tetapi dari apa yang saya lihat sampai sekarang, saya menyadari bahwa fitur testing di `Postman` sangat berguna untuk memverifikasi fungsi endpoint secara otomatis. Fitur tersebut dapat membantu dalam proyek kelompok maupun pengembangan aplikasi di masa depan karena memungkinkan testing yang cepat dan terstruktur tanpa harus menulis script testing secara manual.
